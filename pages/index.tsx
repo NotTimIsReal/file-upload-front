@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
+import Features from "../components/features";
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
@@ -59,15 +60,10 @@ const Home: NextPage = () => {
           File Hosting
         </h1>
       </Box>
-      <Box
-        width="100%"
-        position="fixed"
-        overflow="scroll"
-        paddingBottom="200em"
-      >
+      <Box width="100%" position="relative" overflow="hidden" marginRight="1em">
         <h1
           style={{
-            left: "10rem",
+            left: "5em",
             position: "relative",
             fontSize: "40px",
             fontFamily: "Manrope",
@@ -75,10 +71,10 @@ const Home: NextPage = () => {
         >
           Why Choose Us?
         </h1>
-        <p style={{ left: "10rem", width: "20rem", position: "relative" }}>
-          Because we are free and open-source so you will know how we store our
-          files
-        </p>
+        <Features text="Free And Open Source" />
+        <Features text="Easy To Edit" />
+        <Features text="Available on github" />
+        <Features text="Available on github" />
       </Box>
     </>
   );

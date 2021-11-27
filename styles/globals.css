@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400&family=Roboto:wght@100&display=swap");
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: white;
+}
+* {
+  color: white;
+  outline: inherit;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* div {
+  box-sizing: border-box;
+  background-color: rgb(0, 89, 217);
+}
+input {
+  border: "1px" "solid" "black";
+}
+.login-box {
+  background-image: url("../images/stacked-waves-haikei.svg");
+}
+.spacer {
+  aspect-ratio: 900/400;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

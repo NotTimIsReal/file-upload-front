@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
 import Features from "../components/features";
 const Home: NextPage = () => {
-  const [username, setUsername] = useState<string>();
-  const [password, setPassword] = useState<string>();
   const [loggedin, setLoggedin] = useState<boolean>(false);
   const [user, setUser] = useState<string | null>();
   const getUser = async () => {
@@ -27,22 +25,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     getUser();
   });
-  const login = async () => {
-    console.log(username);
-    const id = await (
-      await axios.default.get("http://localhost:3003/account/user/" + username)
-    ).data.userid;
-    console.log(id);
-    await axios.default
-      .get("http://localhost:3003/auth/login", {
-        params: {
-          id,
-          password: password,
-        },
-        withCredentials: true,
-      })
-      .catch((err) => console.error(err));
-  };
   return (
     <>
       <Navbar />
@@ -60,10 +42,15 @@ const Home: NextPage = () => {
           File Hosting
         </h1>
       </Box>
-      <Box width="100%" position="relative" overflow="hidden" marginRight="1em">
+      <Box
+        width="100%"
+        position="relative"
+        overflow="hidden"
+        marginRight="1em"
+        textAlign="center"
+      >
         <h1
           style={{
-            left: "5em",
             position: "relative",
             fontSize: "40px",
             fontFamily: "Manrope",
@@ -71,10 +58,35 @@ const Home: NextPage = () => {
         >
           Why Choose Us?
         </h1>
-        <Features text="Free And Open Source" />
-        <Features text="Easy To Edit" />
-        <Features text="Available on github" />
-        <Features text="Available on github" />
+        <ul style={{ display: "inline-block" }}>
+          <Features text="Free And Open Source" />
+          <Features text="Easy To Edit" />
+          <Features text="Available on github" />
+          <Features text="Has an open-source api" />
+        </ul>
+      </Box>
+      <Box
+        width="100%"
+        position="relative"
+        overflow="hidden"
+        marginRight="1em"
+        textAlign="center"
+      >
+        <h1
+          style={{
+            position: "relative",
+            fontSize: "40px",
+            fontFamily: "Manrope",
+          }}
+        >
+          FAQS
+        </h1>
+        <ul style={{ display: "inline-block" }}>
+          <dd> How Do I upload?</dd>
+          <Features text="You Login First and then go to the dashboard"></Features>
+          <dd>Can I use this website for my own frontend?</dd>
+          <Features text="Yes feel free you just need your api to fit with this and edit the .env files" />
+        </ul>
       </Box>
     </>
   );

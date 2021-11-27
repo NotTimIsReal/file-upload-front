@@ -55,6 +55,7 @@ export default function Navbar() {
         color="white"
         top="1em"
         _hover={{ bg: "blue.500" }}
+        onClick={() => (window.location.href = "/login")}
       >
         Login
       </Button>

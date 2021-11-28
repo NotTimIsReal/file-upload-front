@@ -1,5 +1,16 @@
 import { Button } from "@chakra-ui/react";
-export default function Navbar() {
+import * as axios from "axios";
+const signout = async () => {
+  await axios.default.get("http://localhost:3003/auth/signout", {
+    withCredentials: true,
+  });
+  return window.location.reload();
+};
+interface props {
+  loggedin: boolean;
+}
+import { FC } from "react";
+const Navbar: FC<props> = ({ loggedin }) => {
   return (
     <div
       style={{
@@ -55,10 +66,13 @@ export default function Navbar() {
         color="white"
         top="1em"
         _hover={{ bg: "blue.500" }}
-        onClick={() => (window.location.href = "/login")}
+        onClick={() =>
+          loggedin ? signout() : (window.location.href = "/login")
+        }
       >
-        Login
+        {loggedin ? "Sign Out" : "Login"}
       </Button>
     </div>
   );
-}
+};
+export default Navbar;

@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   });
   return (
     <>
-      <Navbar />
+      <Navbar loggedin={loggedin} />
       <Box border="black" padding="0" className="login-box spacer">
         <h1
           style={{

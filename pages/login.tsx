@@ -14,14 +14,19 @@ const LoginPage = () => {
       password?.length < 0
     )
       return setErr("invalid field data");
-    console.log(username);
     const id = await (
       await axios.default
         .get("http://localhost:3003/account/user/" + username)
+        .then(({ data }) => {
+          console.log(data);
+          if (data === 404 || data === 403) return setErr("user not found");
+          else return data;
+        })
         .catch((err) => {
           setErr(err == 404 ? "Username not found" : "NETWORK ERROR");
         })
-    )?.data.userid;
+    )?.userid;
+    if (err) return;
     console.log(id);
     await axios.default
       .get("http://localhost:3003/auth/login", {
@@ -31,9 +36,9 @@ const LoginPage = () => {
         },
         withCredentials: true,
       })
-      .catch((err) => setErr(err == 401 ? "User not Found" : "NETWORK ERROR"))
+      .catch((err) => setErr(err == 405 ? "User not Found" : "NETWORK ERROR"))
       .then((e) => {
-        console.log(e);
+        if (!e) return setErr("Password Invalid");
         window.location.href = "/";
       });
   };
@@ -77,6 +82,7 @@ const LoginPage = () => {
           width="50%"
           defaultValue="Password"
           bg="white"
+          type="password"
           color="black"
           onChange={(props) => {
             setErr(null);
@@ -92,7 +98,7 @@ const LoginPage = () => {
         <br />
         <a href="/signup">Don&apos;t Have An Account?</a>
         <br />
-        <a href="/signup">Click ME</a>
+        <a href="/signup">Click Me</a>
         <p style={{ color: "red" }}>{err ? err : null}</p>
       </div>
     </body>

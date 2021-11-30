@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { Button } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { useState } from "react";
@@ -38,7 +39,7 @@ const LoginPage = () => {
       })
       .catch((err) => setErr(err == 405 ? "User not Found" : "NETWORK ERROR"))
       .then((e) => {
-        if (!e) return setErr("Password Invalid");
+        if (e) return setErr("Password Invalid");
         window.location.href = "/";
       });
   };

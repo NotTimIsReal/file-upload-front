@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Link } from "@chakra-ui/react";
 import * as axios from "axios";
 const signout = async () => {
   await axios.default.get("http://localhost:3003/auth/signout", {
@@ -6,46 +6,72 @@ const signout = async () => {
   });
   return window.location.reload();
 };
+type User = {
+  userid: string;
+  username: string;
+  createdAt: number;
+  UploadedFileSize: string;
+};
 interface props {
   loggedin: boolean;
+  user?: User | null | undefined;
 }
 import { FC } from "react";
-const Navbar: FC<props> = ({ loggedin }) => {
+const Navbar: FC<props> = ({ loggedin, user }) => {
+  console.log(user);
   return (
     <div
       style={{
         paddingBottom: "3rem",
         backgroundColor: "rgb(96, 152, 252)",
-        color: "black",
+        color: "white",
         maxHeight: "5rem",
         display: "flex",
         fontSize: "1.75rem",
         outline: "none",
       }}
     >
-      <span
+      <Link
+        href="/"
         style={{
           width: "100erm",
           top: "0.5em",
           left: "1em",
           position: "relative",
           marginRight: "1em",
+          textDecoration: "none",
         }}
       >
         Home
-      </span>
-      <span
-        style={{
-          width: "100erm",
-          top: "0.5em",
-          left: "1em",
-          position: "relative",
-          marginRight: "1em",
-        }}
-      >
-        Dashboard
-      </span>
-      <span
+      </Link>
+      {user?.userid ? (
+        <a
+          href={`${user.userid}/upload`}
+          style={{
+            width: "100erm",
+            top: "0.5em",
+            left: "1em",
+            position: "relative",
+            marginRight: "1em",
+          }}
+        >
+          Upload
+        </a>
+      ) : (
+        <span
+          style={{
+            width: "100erm",
+            top: "0.5em",
+            left: "1em",
+            position: "relative",
+            marginRight: "1em",
+          }}
+        >
+          upload
+        </span>
+      )}
+      <a
+        href="https://github.com/NotTimIsReal/fileupload-frontend"
         style={{
           width: "100erm",
           top: "0.5em",
@@ -55,7 +81,7 @@ const Navbar: FC<props> = ({ loggedin }) => {
         }}
       >
         Source-Code
-      </span>
+      </a>
       <Button
         right="0"
         mr="20"

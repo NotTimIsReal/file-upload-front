@@ -5,8 +5,14 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
 import Features from "../components/features";
 const Home: NextPage = () => {
+  type User = {
+    userid: string;
+    username: string;
+    createdAt: number;
+    UploadedFileSize: string;
+  };
   const [loggedin, setLoggedin] = useState<boolean>(false);
-  const [user, setUser] = useState<string | null>();
+  const [user, setUser] = useState<User | null>();
   const getUser = async () => {
     await axios.default
       .get("http://localhost:3003/account/user/@me", { withCredentials: true })
@@ -15,7 +21,7 @@ const Home: NextPage = () => {
           setLoggedin(false);
         } else if (typeof res.data === "object") {
           setLoggedin(true);
-          setUser(res.data.username);
+          setUser(res.data);
         }
       })
       .catch((err) => {
@@ -27,7 +33,7 @@ const Home: NextPage = () => {
   });
   return (
     <>
-      <Navbar loggedin={loggedin} />
+      <Navbar loggedin={loggedin} user={user} />
       <Box border="black" padding="0" className="login-box spacer">
         <h1
           style={{

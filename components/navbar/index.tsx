@@ -67,7 +67,7 @@ const Navbar: FC<props> = ({ loggedin, user }) => {
             marginRight: "1em",
           }}
         >
-          upload
+          Upload
         </span>
       )}
       <a

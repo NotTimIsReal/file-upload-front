@@ -17,7 +17,7 @@ const LoginPage = () => {
       return setErr("invalid field data");
     const id = await (
       await axios.default
-        .get("http://localhost:3003/account/user/" + username)
+        .get(process.env.API + "account/user/" + username)
         .then(({ data }) => {
           console.log(data);
           if (data === 404 || data === 403) return setErr("user not found");
@@ -30,7 +30,7 @@ const LoginPage = () => {
     if (err) return;
     console.log(id);
     await axios.default
-      .get("http://localhost:3003/auth/login", {
+      .get(process.env.API + "auth/login", {
         params: {
           id,
           password: password,

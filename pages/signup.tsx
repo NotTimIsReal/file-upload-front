@@ -16,7 +16,7 @@ const SignUpPage = () => {
   const [showPassword, setShowPass] = useState<boolean>(false);
   const signUp = async () => {
     await axios.default
-      .post("http://localhost:3003/account/signup", {
+      .post(process.env.API + "account/signup", {
         password,
         username,
         email,

@@ -23,7 +23,7 @@ const Upload: NextPage = () => {
   const [file, setFile] = useState<File | null>();
   const getUser = async () => {
     await axios.default
-      .get("http://localhost:3003/account/user/@me", { withCredentials: true })
+      .get(process.env.API, { withCredentials: true })
       .then((res) => {
         if (res.data === 405) {
           setLoggedin(false);
@@ -70,7 +70,7 @@ const Upload: NextPage = () => {
             setFile(file);
             await axios.default
               .post(
-                `http://localhost:3003/account/${
+                `${process.env.API}${
                   window.location.pathname.split("/")[1]
                 }/newfile`,
                 form(file),

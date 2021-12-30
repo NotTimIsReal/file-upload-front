@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>();
   const getUser = async () => {
     await axios.default
-      .get(process.env.API, { withCredentials: true })
+      .get(process.env.API + "account/user", { withCredentials: true })
       .then((res) => {
         if (res.data === 405) {
           setLoggedin(false);

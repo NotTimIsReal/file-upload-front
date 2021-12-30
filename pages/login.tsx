@@ -8,6 +8,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>();
   const [err, setErr] = useState<string | null>();
   const login = async () => {
+    console.log(process.env.API);
     if (
       !username ||
       !password ||

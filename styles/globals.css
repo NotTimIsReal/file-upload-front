@@ -25,7 +25,7 @@ input {
   border: "1px" "solid" "black";
 }
 .login-box {
-  background-image: url("../images/stacked-waves-haikei.svg");
+  background-image: url("/wave.svg");
 }
 .spacer {
   aspect-ratio: 900/400;

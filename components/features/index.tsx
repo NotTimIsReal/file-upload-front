@@ -1,4 +1,4 @@
-export default function Features({ text }) {
+export default function Features({ text }:{text:string}) {
   return (
     <>
       <li

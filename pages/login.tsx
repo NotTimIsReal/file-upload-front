@@ -39,7 +39,7 @@ const LoginPage = () => {
       })
       .catch((err) => setErr(err == 405 ? "User not Found" : "NETWORK ERROR"))
       .then((e) => {
-        if (e) return setErr("Password Invalid");
+        setErr("Password Invalid");
         window.location.href = "/";
       });
   };

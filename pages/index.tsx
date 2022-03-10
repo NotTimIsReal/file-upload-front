@@ -1,8 +1,9 @@
 import axios from "axios";
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
-import formdata from "form-data";
-const Home: NextPage = () => {
+import Navbar from "../components/navbar";
+import css from "../styles/home.module.css";
+const Home: NextPage<any> = ({ API }: { API: string }) => {
   type User = {
     userid: string;
     username: string;
@@ -11,11 +12,6 @@ const Home: NextPage = () => {
   };
   const [loggedin, setLoggedin] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>();
-  const sendFile = async (data: any) => {
-    await axios.post(`${process.env.API}/account/898920274945/newfile`, data, {
-      withCredentials: true,
-    });
-  };
   const signIN = async () => {
     await axios.post(
       `${process.env.API}/auth/login`,
@@ -30,20 +26,25 @@ const Home: NextPage = () => {
     signIN();
   }, []);
   return (
-    <>
-      <input
-        type={"file"}
-        multiple
-        onChange={(data) => {
-          const d = new formdata();
-          if (data.target.files)
-            for (let i = 0; i < data.target.files?.length; i++) {
-              d.append("file", data.target.files[i]);
-            }
-          sendFile(d);
-        }}
-      ></input>
-    </>
+    <div className={css.main}>
+      <Navbar loggedin={true} API={API} />
+      <div className={css.page}>
+        <h1 className={css.text}>The Greatest Ever File Browser! (I think)</h1>
+        <p className={css.text}>It can upload and delete multiple files!</p>
+        <p className={css.text}>Open Source And Secure</p>
+        <p className={css.text}>
+          And Created By Me Not Some Big-Shot Company Like Facebook Or Google!
+          (I mean I am using react by Facebook but eh)
+        </p>
+      </div>
+    </div>
   );
 };
 export default Home;
+export const getStaticProps = async () => {
+  return {
+    props: {
+      API: process.env.API,
+    },
+  };
+};

@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    API: "http://localhost:9090",
+    API: process.env.API,
   },
 };

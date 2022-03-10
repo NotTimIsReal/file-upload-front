@@ -1,0 +1,16 @@
+.main {
+}
+.page {
+  position: relative;
+}
+h1.text {
+  font-size: 30px;
+  margin: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+p.text {
+  margin: 10px;
+  text-align: center;
+  font-size: 20px;
+}

@@ -1,8 +1,9 @@
-import { Button, Link } from "@chakra-ui/react";
-import * as axios from "axios";
-const signout = async () => {
-  await axios.default.get("http://localhost:3003/auth/signout", {
-    withCredentials: true,
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-html-link-for-pages */
+import css from "../../styles/navbar.module.css";
+const signout = async (API: string) => {
+  await fetch(`${API}/api/auth/logout`, {
+    credentials: "include",
   });
   return window.location.reload();
 };
@@ -15,90 +16,34 @@ type User = {
 interface props {
   loggedin: boolean;
   user?: User | null | undefined;
+  API: string;
 }
 import { FC } from "react";
-const Navbar: FC<props> = ({ loggedin, user }) => {
+import { Button } from "@chakra-ui/react";
+const Navbar: FC<props> = ({ loggedin, user, API }) => {
   console.log(user);
   return (
-    <div
-      style={{
-        paddingBottom: "3rem",
-        backgroundColor: "rgb(96, 152, 252)",
-        color: "white",
-        maxHeight: "5rem",
-        display: "flex",
-        fontSize: "1.75rem",
-        outline: "none",
-      }}
-    >
-      <Link
-        href="/"
-        style={{
-          width: "100erm",
-          top: "0.5em",
-          left: "1em",
-          position: "relative",
-          marginRight: "1em",
-          textDecoration: "none",
-        }}
-      >
+    <nav className={css.navbar}>
+      <img
+        src="/favicon.ico"
+        alt="Favicon"
+        className={css.icon}
+        width="40px"
+        height="40px"
+      />
+      <a href="/" className={css.link}>
         Home
-      </Link>
-      {user?.userid ? (
-        <a
-          href={`${user.userid}/upload`}
-          style={{
-            width: "100erm",
-            top: "0.5em",
-            left: "1em",
-            position: "relative",
-            marginRight: "1em",
-          }}
-        >
-          Upload
-        </a>
-      ) : (
-        <span
-          style={{
-            width: "100erm",
-            top: "0.5em",
-            left: "1em",
-            position: "relative",
-            marginRight: "1em",
-          }}
-        >
-          Upload
-        </span>
-      )}
-      <a
-        href="https://github.com/NotTimIsReal/fileupload-frontend"
-        style={{
-          width: "100erm",
-          top: "0.5em",
-          left: "1em",
-          position: "relative",
-          marginRight: "1em",
-        }}
-      >
-        Source-Code
       </a>
-      <Button
-        right="0"
-        mr="20"
-        pr="10"
-        pl="10"
-        position="absolute"
-        bg="blue"
-        color="white"
-        top="1em"
-        _hover={{ bg: "blue.500" }}
-        onClick={() =>
-          loggedin ? signout() : (window.location.href = "/login")
-        }
-      >
-        {loggedin ? "Sign Out" : "Login"}
+      <a href="/dashboard" className={css.link}>
+        Dashboard
+      </a>
+      <a href="/about" className={css.link}>
+        About
+      </a>
+      <Button className={css.login} color={"white"}>
+        Login
       </Button>
-    </div>
+    </nav>
   );
 };
 export default Navbar;

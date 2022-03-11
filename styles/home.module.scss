@@ -1,0 +1,56 @@
+.main {
+}
+.page {
+  position: relative;
+  background-image: url("/wave.svg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 900px;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  transition: all 0.5s ease;
+  margin: 0;
+  &:hover {
+    /*zoom in*/
+    transform: scale(1.01);
+  }
+}
+h1.text {
+  font-size: 30px;
+  margin-top: 0px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+p.text {
+  margin: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+div.waveBar {
+  font-size: 20px;
+  position: relative;
+  background-image: url("/steps.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 900px;
+  color: white;
+  transition: all 0.5s ease;
+  &:hover {
+    /*zoom in*/
+    transform: scale(1.01);
+  }
+  text-align: center;
+}
+@keyframes comeInFromSide {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

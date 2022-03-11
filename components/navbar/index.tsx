@@ -2,10 +2,10 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import css from "../../styles/navbar.module.css";
 const signout = async (API: string) => {
-  await fetch(`${API}/api/auth/logout`, {
+  await fetch(`${API}/auth/signout`, {
     credentials: "include",
+    method: "POST",
   });
-  return window.location.reload();
 };
 type User = {
   userid: string;
@@ -21,7 +21,6 @@ interface props {
 import { FC } from "react";
 import { Button } from "@chakra-ui/react";
 const Navbar: FC<props> = ({ loggedin, user, API }) => {
-  console.log(user);
   return (
     <nav className={css.navbar}>
       <img
@@ -40,8 +39,14 @@ const Navbar: FC<props> = ({ loggedin, user, API }) => {
       <a href="/about" className={css.link}>
         About
       </a>
-      <Button className={css.login} color={"white"}>
-        Login
+      <Button
+        className={css.login}
+        color={"white"}
+        onClick={() => {
+          loggedin ? signout(API) : null;
+        }}
+      >
+        {loggedin ? "Sign Out" : "Login"}
       </Button>
     </nav>
   );

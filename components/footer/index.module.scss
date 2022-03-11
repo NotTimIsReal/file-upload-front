@@ -1,0 +1,14 @@
+.footer {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(20, 0, 32);
+  color: white;
+  text-align: center;
+  z-index: 1;
+  height: 100px;
+  a:hover {
+    color: rgb(211, 201, 201);
+  }
+}

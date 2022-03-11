@@ -4,4 +4,10 @@
 * {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
+  scrollbar-width: none; /* Firefox */
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }

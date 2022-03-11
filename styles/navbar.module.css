@@ -1,5 +1,6 @@
 nav.navbar {
   position: relative;
+  z-index: 1;
   padding: 50px;
   background-color: rgb(55, 37, 219);
   width: 100%;

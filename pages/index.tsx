@@ -14,18 +14,7 @@ const Home: NextPage<any> = ({ API }: { API: string }) => {
     UploadedFileSize: string;
   };
 
-  const signIN = async () => {
-    await axios.post(
-      `${process.env.API}/auth/login`,
-      {
-        id: "898920274945",
-        password: "password",
-      },
-      { withCredentials: true }
-    );
-  };
   useEffect(() => {
-    signIN();
     getUser(API, setLoggedin);
   }, []);
   return (
@@ -64,6 +53,6 @@ async function getUser(API: string, state: (data: any) => void) {
     credentials: "include",
     method: "GET",
   });
-  state(res.status != 404);
-  return res.status != 404;
+  state(res.status != 401);
+  return;
 }

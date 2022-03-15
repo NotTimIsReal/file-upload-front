@@ -1,6 +1,8 @@
 .main {
 }
 .page {
+  margin-top: 0px;
+  z-index: 0;
   position: relative;
   background-image: url("/wave.svg");
   background-repeat: no-repeat;
@@ -10,7 +12,6 @@
   background-position: center;
   color: white;
   transition: all 0.5s ease;
-  margin: 0;
   &:hover {
     /*zoom in*/
     transform: scale(1.01);

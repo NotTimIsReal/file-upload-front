@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
+div.page {
+  position: relative;
+  display: flex;
+  overflow-y: visible !important;
+  scrollbar-width: auto;
+  scroll-behavior: auto;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  color: white;
+  height: 1000px;
+  p {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-family: "Ubuntu Mono", monospace;
+    height: max-content;
+  }
+  div.files {
+    margin: 90px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+  }
+  div.upload {
+    margin: 50px;
+    right: 0;
+    position: absolute;
+    input.file {
+      font-family: "Ubuntu Mono";
+      background-color: black;
+    }
+  }
+}

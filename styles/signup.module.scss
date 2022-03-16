@@ -10,7 +10,7 @@ div.main {
   align-self: center;
   text-align: center;
   justify-self: center;
-  background-image: url("/login.svg");
+  background-image: url("/signup.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -22,7 +22,7 @@ input.input {
   }
   margin-top: 20px;
   background-image: none;
-  background-color: rgb(148, 31, 31);
+  background-color: transparent;
   color: white;
 }
 div.container {
@@ -45,7 +45,9 @@ button.login {
 }
 span.error {
   margin-top: 10px;
-  color: red;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+  font-size: 1rem;
 }
 span.signup {
   margin: 20px;

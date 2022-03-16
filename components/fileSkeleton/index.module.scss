@@ -67,4 +67,9 @@ div.skeleton {
     justify-content: center;
     align-content: center;
   }
+  svg.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }

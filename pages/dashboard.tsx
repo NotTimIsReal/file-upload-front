@@ -28,9 +28,6 @@ export default function Dashboard({
       });
     }
   });
-  useEffect(() => {
-    console.log(user.files);
-  }, [user]);
 
   return (
     <div className={css.container}>
@@ -38,7 +35,7 @@ export default function Dashboard({
       <LoadingBar progress={Progress} />
       <br />
       <div className={css.page}>
-        <p>Welcome Back, {user.username}</p>
+        <p>Welcome Back, {User.username}</p>
         <div className={css.upload}>
           <input
             type="file"
@@ -50,14 +47,14 @@ export default function Dashboard({
               for (let i = 0; i < v.target.files?.length; i++) {
                 data.append("file", v.target.files[i]);
               }
-              uploadFiles(API, user, data);
+              uploadFiles(API, User, data);
             }}
           />
         </div>
 
         <div className={css.files}>
           <p>
-            {user.files.length == 0 ? (
+            {User.files.length == 0 ? (
               "I can't find any uploaded files, try uploading some!"
             ) : (
               <FileSkeleton user={User} API={API} />
@@ -75,7 +72,7 @@ export const getServerSideProps = async ({ req }: { req: any }) => {
       Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
     },
   });
-  if (user.status == 401)
+  if (user.status == 404)
     return {
       redirect: {
         destination: "/login",

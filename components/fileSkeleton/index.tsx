@@ -7,12 +7,13 @@ import { AiFillDelete, AiFillEdit, AiOutlineDownload } from "react-icons/ai";
 export const FileEvents = new events();
 export default function FileSkeleton({
   user,
-  API = "http://localhost:9090",
+  API,
 }: {
   user: User;
   API: string;
 }) {
   const [markdown, setMarkdown] = useState<any[]>([]);
+  const [editing, setEditing] = useState<boolean>(false);
   useEffect(() => {
     user.files
       .filter((f) => f.split(".").pop() == "md")
@@ -72,7 +73,12 @@ export default function FileSkeleton({
                   deleteFile(file, API, user.userid);
                 }}
               ></AiFillDelete>
-              <AiFillEdit />
+              <AiFillEdit
+                className={notEditableFile(file) ? css.disabled : ""}
+                onClick={() => {
+                  setEditing(true);
+                }}
+              />
               <AiOutlineDownload
                 onClick={() => {
                   downloadFile(file, API, user.userid);
@@ -98,7 +104,7 @@ const getContent = async (
 ) => {
   const res = await fetch(`${API}/account/${user.userid}/file/${file}/view`, {
     credentials: "include",
-    signal: Timeout(5).signal,
+    signal: Timeout(10).signal,
   });
   const text = await res.text();
   state([...arr, { text, file }]);
@@ -125,4 +131,19 @@ async function downloadFile(file: string, API: string, userid: string) {
   document.body.appendChild(link);
   link.click();
   link.parentNode?.removeChild(link);
+}
+function notEditableFile(file: string): boolean {
+  const extention = file.split(".").pop()?.toLowerCase();
+  return (
+    extention == "png" ||
+    extention == "jpg" ||
+    extention == "jpeg" ||
+    extention == "svg" ||
+    extention == "mp4" ||
+    extention == "mov" ||
+    extention == "heic" ||
+    extention == "jar" ||
+    extention == "exe" ||
+    extention == "zip"
+  );
 }

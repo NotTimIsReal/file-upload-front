@@ -4,6 +4,7 @@ import css from "../styles/login.module.scss";
 import { Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 export default function Login({ API }: { API: string }) {
   const [password, setPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -43,6 +44,9 @@ export default function Login({ API }: { API: string }) {
             Login
           </Button>
           {error && <span className={css.error}>{error}</span>}
+          <Link href="/signup" passHref>
+            <span className={css.signup}>Don&apos;t Have An Account?</span>
+          </Link>
         </div>
       </div>
       <Footer></Footer>

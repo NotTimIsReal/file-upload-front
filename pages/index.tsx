@@ -53,6 +53,6 @@ async function getUser(API: string, state: (data: any) => void) {
     credentials: "include",
     method: "GET",
   });
-  state(res.status != 401);
+  state(res.status != 404);
   return;
 }

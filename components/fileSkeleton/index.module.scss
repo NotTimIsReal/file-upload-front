@@ -49,6 +49,7 @@ div.skeleton {
   div.markdownContainer {
     overflow-y: scroll;
     background-color: black;
+    max-height: 200px;
   }
   svg {
     max-width: 25px;
@@ -56,6 +57,9 @@ div.skeleton {
     float: left;
     align-self: center;
     margin-right: 10px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   div.iconHolder {
     display: flex;

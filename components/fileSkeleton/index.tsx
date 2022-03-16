@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import css from "./index.module.scss";
+import events from "events";
 import { AiFillDelete, AiFillEdit, AiOutlineDownload } from "react-icons/ai";
-
+export const FileEvents = new events();
 export default function FileSkeleton({
   user,
-  API,
+  API = "http://localhost:9090",
 }: {
   user: User;
   API: string;
@@ -19,8 +20,7 @@ export default function FileSkeleton({
         console.log(f);
         getContent(API, user, f, setMarkdown, markdown);
       });
-    setTimeout(() => console.log(markdown), 2000);
-  }, [user]);
+  }, [API, markdown, user]);
   user.files = user.files.map((f: string) => {
     const file = f.split("/");
     return file.pop();
@@ -31,7 +31,10 @@ export default function FileSkeleton({
         const extention = file.split(".").pop()?.toLowerCase();
         return (
           <div key={file} className={css.skeleton}>
-            {extention == "png" || extention == "jpg" || extention == "jpeg" ? (
+            {extention == "png" ||
+            extention == "jpg" ||
+            extention == "jpeg" ||
+            extention == "svg" ? (
               <img
                 src={FileLink(API, user, file)}
                 alt="Displayed Image preview"
@@ -45,7 +48,8 @@ export default function FileSkeleton({
               ></video>
             ) : extention == "heic" ||
               extention == "jar" ||
-              extention == "exe" ? (
+              extention == "exe" ||
+              extention == "zip" ? (
               <p>Hm, I can&apos;t render this</p>
             ) : extention == "md" ? (
               <div className={css.markdownContainer}>
@@ -63,9 +67,17 @@ export default function FileSkeleton({
               ></iframe>
             )}
             <div className={css.iconHolder}>
-              <AiFillDelete></AiFillDelete>
+              <AiFillDelete
+                onClick={() => {
+                  deleteFile(file, API, user.userid);
+                }}
+              ></AiFillDelete>
               <AiFillEdit />
-              <AiOutlineDownload />
+              <AiOutlineDownload
+                onClick={() => {
+                  downloadFile(file, API, user.userid);
+                }}
+              />
             </div>
 
             <p>{file}</p>
@@ -86,7 +98,7 @@ const getContent = async (
 ) => {
   const res = await fetch(`${API}/account/${user.userid}/file/${file}/view`, {
     credentials: "include",
-    signal: Timeout(2).signal,
+    signal: Timeout(5).signal,
   });
   const text = await res.text();
   state([...arr, { text, file }]);
@@ -98,3 +110,19 @@ export const Timeout = (time = 5) => {
   setTimeout(() => controller.abort(), time * 1000);
   return controller;
 };
+async function deleteFile(files: string, API: string, userid: string) {
+  await fetch(`${API}/account/${userid}/deletefile`, {
+    method: "DELETE",
+    body: JSON.stringify({ files }),
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+  FileEvents.emit("delete");
+}
+async function downloadFile(file: string, API: string, userid: string) {
+  const link = document.createElement("a");
+  link.href = `${API}/account/${userid}/file/${file}/download`;
+  document.body.appendChild(link);
+  link.click();
+  link.parentNode?.removeChild(link);
+}

@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import css from "../styles/dashboard.module.scss";
 import formdata from "form-data";
-import FileSkeleton from "../components/fileSkeleton";
+import FileSkeleton, { FileEvents } from "../components/fileSkeleton";
 import Footer from "../components/footer";
+import LoadingBar from "react-top-loading-bar";
 export default function Dashboard({
   API,
   User: user,
@@ -13,12 +14,28 @@ export default function Dashboard({
   User: User;
 }) {
   const [User, setuser] = useState(user);
+  const [Progress, setProgress] = useState<any>();
+  FileEvents.once("delete", () => {
+    revalidate(API, User).then((res) => {
+      setuser(res);
+    });
+  });
+  FileEvents.on("upload", async ({ progress }) => {
+    setProgress(progress == "start" ? 70 : 100);
+    if (progress !== "start") {
+      revalidate(API, User).then((res) => {
+        setuser(res);
+      });
+    }
+  });
   useEffect(() => {
     console.log(user.files);
-  }, [user.files]);
+  }, [user]);
+
   return (
     <div className={css.container}>
       <Navbar loggedin={true} API={API}></Navbar>
+      <LoadingBar progress={Progress} />
       <br />
       <div className={css.page}>
         <p>Welcome Back, {user.username}</p>
@@ -33,9 +50,7 @@ export default function Dashboard({
               for (let i = 0; i < v.target.files?.length; i++) {
                 data.append("file", v.target.files[i]);
               }
-              uploadFiles(API, user, data).then(async () => {
-                setuser(await revalidate(API, user));
-              });
+              uploadFiles(API, user, data);
             }}
           />
         </div>
@@ -83,18 +98,20 @@ async function getUser(API: string) {
   return res.status != 405;
 }
 async function uploadFiles(API: string, User: User, data: any) {
+  FileEvents.emit("upload", { progress: "start" });
   const res = await fetch(`${API}/account/${User.userid}/newfile`, {
     credentials: "include",
     method: "POST",
     body: data,
   });
   const retur = await res.json();
+  FileEvents.emit("upload", { progress: "done" });
   return retur;
 }
 async function revalidate(API: string, User: User) {
   const res = await fetch(`${API}/account/user/@me`, {
     credentials: "include",
   });
-  User = await res.json();
-  return User;
+
+  return await res.json();
 }

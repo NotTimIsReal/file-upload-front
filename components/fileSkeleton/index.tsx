@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import css from "./index.module.scss";
 import events from "events";
 import { AiFillDelete, AiFillEdit, AiOutlineDownload } from "react-icons/ai";
+import Editable from "../editable";
 export const FileEvents = new events();
 export default function FileSkeleton({
   user,
@@ -31,63 +32,71 @@ export default function FileSkeleton({
       {user.files.map((file: string) => {
         const extention = file.split(".").pop()?.toLowerCase();
         return (
-          <div key={file} className={css.skeleton}>
-            {extention == "png" ||
-            extention == "jpg" ||
-            extention == "jpeg" ||
-            extention == "svg" ? (
-              <img
-                src={FileLink(API, user, file)}
-                alt="Displayed Image preview"
-              ></img>
-            ) : extention == "mp4" || extention == "mov" ? (
-              <video
-                src={FileLink(API, user, file)}
-                width={"100px"}
-                height={"100px"}
-                controls
-              ></video>
-            ) : extention == "heic" ||
-              extention == "jar" ||
-              extention == "exe" ||
-              extention == "zip" ? (
-              <p>Hm, I can&apos;t render this</p>
-            ) : extention == "md" ? (
-              <div className={css.markdownContainer}>
-                <ReactMarkdown>
-                  {markdown.find((f) => f.file == file)
-                    ? markdown.find((f) => f.file == file).text
-                    : "Loading"}
-                </ReactMarkdown>
+          <>
+            <div key={file} className={css.skeleton}>
+              {extention == "png" ||
+              extention == "jpg" ||
+              extention == "jpeg" ||
+              extention == "svg" ? (
+                <img
+                  src={FileLink(API, user, file)}
+                  alt="Displayed Image preview"
+                ></img>
+              ) : extention == "mp4" || extention == "mov" ? (
+                <video
+                  src={FileLink(API, user, file)}
+                  width={"100px"}
+                  height={"100px"}
+                  controls
+                ></video>
+              ) : extention == "heic" ||
+                extention == "jar" ||
+                extention == "exe" ||
+                extention == "zip" ? (
+                <p>Hm, I can&apos;t render this</p>
+              ) : extention == "md" ? (
+                <div className={css.markdownContainer}>
+                  <ReactMarkdown>
+                    {markdown.find((f) => f.file == file)
+                      ? markdown.find((f) => f.file == file).text
+                      : "Loading"}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <iframe
+                  src={FileLink(API, user, file)}
+                  sandbox="allow-forms allow-scripts allow-same-origin allow-downloads"
+                  allowFullScreen
+                ></iframe>
+              )}
+              <div className={css.iconHolder}>
+                <AiFillDelete
+                  onClick={() => {
+                    deleteFile(file, API, user.userid);
+                  }}
+                ></AiFillDelete>
+                <AiFillEdit
+                  className={notEditableFile(file) ? css.disabled : ""}
+                  onClick={async () => {
+                    const content = await getFileContent(file, API, user);
+                    FileEvents.emit("edit", {
+                      user,
+                      file,
+                      content,
+                    });
+                    setEditing(true);
+                  }}
+                />
+                <AiOutlineDownload
+                  onClick={() => {
+                    downloadFile(file, API, user.userid);
+                  }}
+                />
               </div>
-            ) : (
-              <iframe
-                src={FileLink(API, user, file)}
-                sandbox="allow-forms allow-scripts allow-same-origin allow-downloads"
-                allowFullScreen
-              ></iframe>
-            )}
-            <div className={css.iconHolder}>
-              <AiFillDelete
-                onClick={() => {
-                  deleteFile(file, API, user.userid);
-                }}
-              ></AiFillDelete>
-              <AiFillEdit
-                className={notEditableFile(file) ? css.disabled : ""}
-                onClick={() => {
-                  setEditing(true);
-                }}
-              />
-              <AiOutlineDownload
-                onClick={() => {
-                  downloadFile(file, API, user.userid);
-                }}
-              />
-            </div>
 
-            <p>{file}</p>
-          </div>
+              <p>{file}</p>
+            </div>
+          </>
         );
       })}
     </div>
@@ -146,4 +155,13 @@ function notEditableFile(file: string): boolean {
     extention == "exe" ||
     extention == "zip"
   );
+}
+async function getFileContent(
+  file: string | null,
+  API: string,
+  user: User | null
+) {
+  return await fetch(`${API}/account/${user?.userid}/file/${file}/view`, {
+    credentials: "include",
+  }).then(async (res) => await res.text());
 }

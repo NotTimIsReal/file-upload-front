@@ -62,7 +62,7 @@ div.userProfile {
     border-radius: 10px;
     justify-content: center;
     align-items: center;
-    button {
+    button.login {
       width: 100px;
       &:hover {
         background-color: rgb(35, 35, 36);
@@ -93,4 +93,6 @@ div.login {
   img {
     image-orientation: from-image;
   }
+}
+button.login {
 }

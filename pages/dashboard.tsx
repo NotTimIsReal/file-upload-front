@@ -4,6 +4,7 @@ import Navbar from "../components/navbar";
 import css from "../styles/dashboard.module.scss";
 import formdata from "form-data";
 import FileSkeleton, { FileEvents } from "../components/fileSkeleton";
+import Editable from "../components/editable";
 import Footer from "../components/footer";
 import LoadingBar from "react-top-loading-bar";
 export default function Dashboard({
@@ -14,7 +15,7 @@ export default function Dashboard({
   User: User;
 }) {
   const [User, setuser] = useState(user);
-  const [Progress, setProgress] = useState<any>();
+  const [Progress, setProgress] = useState<number>();
   FileEvents.once("delete", () => {
     revalidate(API, User).then((res) => {
       setuser(res);
@@ -28,9 +29,10 @@ export default function Dashboard({
       });
     }
   });
-
   return (
     <div className={css.container}>
+      <Editable API={API} />
+
       <Navbar loggedin={true} API={API}></Navbar>
       <LoadingBar progress={Progress} />
       <br />
@@ -53,13 +55,11 @@ export default function Dashboard({
         </div>
 
         <div className={css.files}>
-          <p>
-            {User.files.length == 0 ? (
-              "I can't find any uploaded files, try uploading some!"
-            ) : (
-              <FileSkeleton user={User} API={API} />
-            )}
-          </p>
+          {User.files.length == 0 ? (
+            "I can't find any uploaded files, try uploading some!"
+          ) : (
+            <FileSkeleton user={User} API={API} />
+          )}
         </div>
       </div>
       <Footer></Footer>

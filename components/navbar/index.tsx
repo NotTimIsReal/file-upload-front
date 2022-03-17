@@ -58,9 +58,6 @@ const Navbar: FC<props> = ({ loggedin, API, User }) => {
       <a href="/dashboard" className={css.link}>
         Dashboard
       </a>
-      <a href="/about" className={css.link}>
-        About
-      </a>
       {!loggedin ? (
         <Button
           className={css.login}

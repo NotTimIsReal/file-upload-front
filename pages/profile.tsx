@@ -1,6 +1,7 @@
 import Navbar from "../components/navbar";
 import css from "../styles/profile.module.scss";
 import { Button } from "@chakra-ui/react";
+import Footer from "../components/footer";
 export default function Profile({ API, User }: { API: string; User: User }) {
   return (
     <div>
@@ -16,6 +17,7 @@ export default function Profile({ API, User }: { API: string; User: User }) {
           Sign Out
         </Button>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

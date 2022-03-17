@@ -59,7 +59,6 @@ export async function getServerSideProps({ req }: { req: any; res: any }) {
       Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
     },
   });
-  console.log(await user.json());
   if (user.status == 200) {
     return {
       redirect: {
@@ -82,7 +81,6 @@ async function handleLogin(
   const res = await fetch(`${API}/account/user/${username}`);
   if (res.status == 404) return "No User Found";
   const user = await res.json();
-  console.log(user);
   const loggedIn = await fetch(`${API}/auth/login`, {
     method: "POST",
     headers: {

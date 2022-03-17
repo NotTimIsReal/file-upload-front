@@ -19,7 +19,6 @@ export default function FileSkeleton({
     user.files
       .filter((f) => f.split(".").pop() == "md")
       .forEach((f) => {
-        console.log(f);
         getContent(API, user, f, setMarkdown, markdown);
       });
   }, [API, markdown, user]);
@@ -117,7 +116,6 @@ const getContent = async (
   });
   const text = await res.text();
   state([...arr, { text, file }]);
-  console.log(arr);
   return text;
 };
 export const Timeout = (time = 5) => {

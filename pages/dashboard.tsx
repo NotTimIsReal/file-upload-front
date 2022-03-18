@@ -72,6 +72,7 @@ export const getServerSideProps = async ({ req }: { req: any }) => {
       Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
     },
   });
+  console.log(user.status)
   if (user.status == 404)
     return {
       redirect: {

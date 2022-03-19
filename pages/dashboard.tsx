@@ -74,7 +74,7 @@ export const getServerSideProps = async ({ req }: { req: any }) => {
     },
   });
   console.log(user.status);
-  if (user.status == (404 || 401))
+  if (user.status == 404 || user.status == 401)
     return {
       redirect: {
         destination: "/login",

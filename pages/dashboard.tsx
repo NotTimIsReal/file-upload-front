@@ -79,11 +79,12 @@ export const getServerSideProps = async ({ req }: { req: any }) => {
         permanent: true,
       },
     };
-  const userJson = await user.json();
+  const userJson = await user.text();
+  console.log(userJson);
   return {
     props: {
       API: process.env.API,
-      User: userJson,
+      User: JSON.parse(userJson),
     },
   };
 };

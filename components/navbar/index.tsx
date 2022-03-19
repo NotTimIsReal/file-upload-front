@@ -16,7 +16,7 @@ const signout = async (API: string) => {
 };
 
 interface props {
-  loggedin: boolean;
+  loggedin?: boolean;
   API: string;
   User?: User;
 }
@@ -31,10 +31,13 @@ const Navbar: FC<props> = ({ loggedin, API, User }) => {
         credentials: "include",
         method: "GET",
       });
-      if (res.status == 405) {
+      if (res.status == 401) {
         setUser(null);
+        loggedin = false;
+      } else {
+        setUser(await res.json());
+        loggedin = true;
       }
-      setUser(await res.json());
     }
     if (!User) {
       getUser();
@@ -57,6 +60,9 @@ const Navbar: FC<props> = ({ loggedin, API, User }) => {
       </a>
       <a href="/dashboard" className={css.link}>
         Dashboard
+      </a>
+      <a href="/presentation" className={css.link}>
+        Presentation
       </a>
       {!loggedin ? (
         <Button

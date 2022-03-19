@@ -67,12 +67,13 @@ export default function Dashboard({
   );
 }
 export const getServerSideProps = async ({ req }: { req: any }) => {
+  console.log(req.cookies);
   const user = await fetch(`${process.env.API}/account/user/@me`, {
     headers: {
       Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
     },
   });
-  console.log(user.status)
+  console.log(user.status);
   if (user.status == 404)
     return {
       redirect: {

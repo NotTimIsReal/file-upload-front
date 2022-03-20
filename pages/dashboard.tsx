@@ -1,4 +1,3 @@
-import { IncomingMessage } from "http";
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import css from "../styles/dashboard.module.scss";
@@ -7,24 +6,33 @@ import FileSkeleton, { FileEvents } from "../components/fileSkeleton";
 import Editable from "../components/editable";
 import Footer from "../components/footer";
 import LoadingBar from "react-top-loading-bar";
-export default function Dashboard({
-  API,
-  User: user,
-}: {
-  API: string;
-  User: User;
-}) {
-  const [User, setuser] = useState(user);
+export default function Dashboard({ API }: { API: string }) {
+  const [User, setuser] = useState<User | null>(null);
+  useEffect(() => {
+    async function getUser() {
+      const res = await fetch(`${API}/account/user/@me`, {
+        credentials: "include",
+        method: "GET",
+      });
+
+      setuser(await res.json());
+    }
+    getUser();
+    if (!User) {
+      window.location.href = "/login";
+    }
+  }, []);
+
   const [Progress, setProgress] = useState<number>();
   FileEvents.once("delete", () => {
-    revalidate(API, User).then((res) => {
+    revalidate(API, User!).then((res) => {
       setuser(res);
     });
   });
   FileEvents.on("upload", async ({ progress }) => {
     setProgress(progress == "start" ? 70 : 100);
     if (progress !== "start") {
-      revalidate(API, User).then((res) => {
+      revalidate(API, User!).then((res) => {
         setuser(res);
       });
     }
@@ -37,10 +45,11 @@ export default function Dashboard({
       <LoadingBar progress={Progress} />
       <br />
       <div className={css.page}>
-        <p>Welcome Back, {User.username}</p>
+        <p>Welcome Back, {User ? User?.username : "Loading"}</p>
         <div className={css.upload}>
           <input
             type="file"
+            disabled={!User}
             multiple
             className={css.file}
             onChange={(v) => {
@@ -49,16 +58,20 @@ export default function Dashboard({
               for (let i = 0; i < v.target.files?.length; i++) {
                 data.append("file", v.target.files[i]);
               }
-              uploadFiles(API, User, data);
+              uploadFiles(API, User!, data);
             }}
           />
         </div>
 
         <div className={css.files}>
-          {User.files.length == 0 ? (
-            "I can't find any uploaded files, try uploading some!"
+          {User ? (
+            User?.files.length == 0 ? (
+              "I can't find any uploaded files, try uploading some!"
+            ) : (
+              <FileSkeleton user={User!} API={API} />
+            )
           ) : (
-            <FileSkeleton user={User} API={API} />
+            "Loading"
           )}
         </div>
       </div>
@@ -67,40 +80,12 @@ export default function Dashboard({
   );
 }
 export const getServerSideProps = async ({ req }: { req: any }) => {
-  if (!req.cookies)
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  const user = await fetch(`${process.env.API}/account/user/@me`, {
-    headers: {
-      Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
-    },
-  });
-  if (user.status == 404 || user.status == 401)
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: true,
-      },
-    };
-  const userJson = await user.text();
   return {
     props: {
       API: process.env.API,
-      User: JSON.parse(userJson),
     },
   };
 };
-async function getUser(API: string) {
-  const res = await fetch(`${API}/account/user/@me`, {
-    credentials: "include",
-    method: "GET",
-  });
-  return res.status != 405;
-}
 async function uploadFiles(API: string, User: User, data: any) {
   FileEvents.emit("upload", { progress: "start" });
   const res = await fetch(`${API}/account/${User.userid}/newfile`, {

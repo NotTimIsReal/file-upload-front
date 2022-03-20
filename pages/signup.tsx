@@ -20,7 +20,7 @@ export default function SignUp({ API }: { API: string }) {
 
   return (
     <div>
-      <Navbar API={API} loggedin={false} />
+      <Navbar API={API} />
       <div className={css.container}>
         <div className={css.main}>
           <h1 className={css.title}>Signup Page</h1>
@@ -68,19 +68,6 @@ export default function SignUp({ API }: { API: string }) {
   );
 }
 export async function getServerSideProps({ req }: { req: any; res: any }) {
-  const user = await fetch(`${process.env.API}/account/user/@me`, {
-    headers: {
-      Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
-    },
-  });
-  if (user.status == 200) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/dashboard",
-      },
-    };
-  }
   return {
     props: {
       API: process.env.API,

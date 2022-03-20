@@ -2,13 +2,30 @@ import Navbar from "../components/navbar";
 import css from "../styles/profile.module.scss";
 import { Button } from "@chakra-ui/react";
 import Footer from "../components/footer";
-export default function Profile({ API, User }: { API: string; User: User }) {
+import { useEffect, useState } from "react";
+export default function Profile({ API }: { API: string }) {
+  const [User, setuser] = useState<User | null>(null);
+  useEffect(() => {
+    async function getUser() {
+      const res = await fetch(`${API}/account/user/@me`, {
+        credentials: "include",
+        method: "GET",
+      });
+
+      setuser(await res.json());
+    }
+    getUser();
+    if (!User) {
+      window.location.href = "/login";
+    }
+  }, []);
   return (
     <div>
       <Navbar loggedin={true} API={API} />
       <div className={css.main}>
-        <h1>Profile Of {User.username}</h1>
+        <h1>Profile Of {User ? User?.username : "Loading"}</h1>
         <Button
+          disabled={!User}
           onClick={() => {
             signOut(API);
             window.location.reload();
@@ -22,23 +39,9 @@ export default function Profile({ API, User }: { API: string; User: User }) {
   );
 }
 export const getServerSideProps = async ({ req }: { req: any }) => {
-  const user = await fetch(`${process.env.API}/account/user/@me`, {
-    headers: {
-      Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
-    },
-  });
-  if (user.status == 401)
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: true,
-      },
-    };
-  const userJson = await user.json();
   return {
     props: {
       API: process.env.API,
-      User: userJson,
     },
   };
 };

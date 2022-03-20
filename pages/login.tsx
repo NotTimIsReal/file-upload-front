@@ -2,7 +2,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import css from "../styles/login.module.scss";
 import { Input, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 export default function Login({ API }: { API: string }) {
@@ -10,6 +10,21 @@ export default function Login({ API }: { API: string }) {
   const [username, setUsername] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const { push } = useRouter();
+  const [User, setuser] = useState<User | null>(null);
+  useEffect(() => {
+    async function getUser() {
+      const res = await fetch(`${API}/account/user/@me`, {
+        credentials: "include",
+        method: "GET",
+      });
+
+      setuser(await res.json());
+    }
+    getUser();
+    if (!User) {
+      window.location.href = "/login";
+    }
+  }, []);
   return (
     <div>
       <Navbar API={API} loggedin={false} />
@@ -33,6 +48,7 @@ export default function Login({ API }: { API: string }) {
             onChange={({ target }) => setPassword(target.value)}
           />
           <Button
+            disabled={error != null || !User}
             className={css.login}
             onClick={() =>
               handleLogin(username, password, API).then((res) => {
@@ -54,19 +70,6 @@ export default function Login({ API }: { API: string }) {
   );
 }
 export async function getServerSideProps({ req }: { req: any; res: any }) {
-  const user = await fetch(`${process.env.API}/account/user/@me`, {
-    headers: {
-      Cookie: `connect.sid=${req.cookies["connect.sid"]}`,
-    },
-  });
-  if (user.status == 200) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/dashboard",
-      },
-    };
-  }
   return {
     props: {
       API: process.env.API,

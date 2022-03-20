@@ -21,7 +21,7 @@ export default function Login({ API }: { API: string }) {
       setuser(await res.json());
     }
     getUser().then(() => {
-      if (!User) {
+      if (User) {
         window.location.href = "/dashboard";
       }
     });

@@ -7,23 +7,20 @@ import Editable from "../components/editable";
 import Footer from "../components/footer";
 import LoadingBar from "react-top-loading-bar";
 export default function Dashboard({ API }: { API: string }) {
-  const [User, setuser] = useState<User | null>(null);
+  const [User, setuser] = useState<User>();
   useEffect(() => {
     async function getUser() {
       const res = await fetch(`${API}/account/user/@me`, {
         credentials: "include",
         method: "GET",
       });
-
-      setuser(await res.json());
-    }
-    getUser().then(() => {
-      if (!User) {
+      if (res.status === 401) {
         window.location.href = "/login";
       }
-    });
+      setuser(await res.json());
+    }
+    getUser();
   }, []);
-
   const [Progress, setProgress] = useState<number>();
   FileEvents.once("delete", () => {
     revalidate(API, User!).then((res) => {

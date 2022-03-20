@@ -11,14 +11,12 @@ export default function Profile({ API }: { API: string }) {
         credentials: "include",
         method: "GET",
       });
-
-      setuser(await res.json());
-    }
-    getUser().then(() => {
-      if (!User) {
+      if (res.status === 401) {
         window.location.href = "/login";
       }
-    });
+      setuser(await res.json());
+    }
+    getUser();
   }, []);
   return (
     <div>

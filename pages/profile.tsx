@@ -25,8 +25,8 @@ export default function Profile({ API }: { API: string }) {
         <h1>Profile Of {User ? User?.username : "Loading"}</h1>
         <Button
           disabled={!User}
-          onClick={() => {
-            signOut(API);
+          onClick={async () => {
+            await signOut(API);
             window.location.reload();
           }}
         >

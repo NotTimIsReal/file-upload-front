@@ -17,10 +17,11 @@ export default function Dashboard({ API }: { API: string }) {
 
       setuser(await res.json());
     }
-    getUser();
-    if (!User) {
-      window.location.href = "/login";
-    }
+    getUser().then(() => {
+      if (!User) {
+        window.location.href = "/login";
+      }
+    });
   }, []);
 
   const [Progress, setProgress] = useState<number>();

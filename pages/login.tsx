@@ -20,10 +20,11 @@ export default function Login({ API }: { API: string }) {
 
       setuser(await res.json());
     }
-    getUser();
-    if (!User) {
-      window.location.href = "/login";
-    }
+    getUser().then(() => {
+      if (!User) {
+        window.location.href = "/login";
+      }
+    });
   }, []);
   return (
     <div>

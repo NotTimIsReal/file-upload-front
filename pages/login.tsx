@@ -22,7 +22,7 @@ export default function Login({ API }: { API: string }) {
     }
     getUser().then(() => {
       if (!User) {
-        window.location.href = "/login";
+        window.location.href = "/dashboard";
       }
     });
   }, []);

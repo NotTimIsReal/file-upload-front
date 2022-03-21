@@ -39,7 +39,7 @@ const Navbar: FC<props> = ({ loggedin = false, API, User }) => {
         loggedin = true;
       }
     }
-    if (!User) {
+    if (!User || !loggedin) {
       getUser();
     } else {
       setUser(User);

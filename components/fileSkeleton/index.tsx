@@ -64,7 +64,7 @@ export default function FileSkeleton({
               ) : (
                 <iframe
                   src={FileLink(API, user, file)}
-                  sandbox="allow-forms allow-scripts allow-same-origin allow-downloads"
+                  sandbox="allow-forms allow-scripts allow-same-origin"
                   allowFullScreen
                 ></iframe>
               )}

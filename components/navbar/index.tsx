@@ -23,7 +23,7 @@ interface props {
 import { FC, useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-const Navbar: FC<props> = ({ loggedin, API, User }) => {
+const Navbar: FC<props> = ({ loggedin = false, API, User }) => {
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     async function getUser() {

@@ -47,12 +47,17 @@ export default function FileSkeleton({
                   width={"100px"}
                   height={"100px"}
                   controls
-                ></video>
+                >
+                  Your browser does not support the Video element.
+                </video>
               ) : extention == "heic" ||
                 extention == "jar" ||
                 extention == "exe" ||
                 extention == "zip" ? (
-                <p>Hm, I can&apos;t render this</p>
+                <p>
+                  Hm, I can&apos;t render this, It is lkely an executable or a
+                  compressed file
+                </p>
               ) : extention == "md" ? (
                 <div className={css.markdownContainer}>
                   <ReactMarkdown>
@@ -61,6 +66,20 @@ export default function FileSkeleton({
                       : "Loading"}
                   </ReactMarkdown>
                 </div>
+              ) : extention == "mp3" ||
+                extention == "mpa" ||
+                extention == "mpa4" ||
+                extention == "aif" ||
+                extention == "cda" ||
+                extention == "mid" ||
+                extention == "midi" ||
+                extention == "ogg" ||
+                extention == "wav" ||
+                extention == "wma" ||
+                extention == "wpl" ? (
+                <audio src={FileLink(API, user, file)} controls>
+                  Your browser does not support the audio element.
+                </audio>
               ) : (
                 <iframe
                   src={FileLink(API, user, file)}

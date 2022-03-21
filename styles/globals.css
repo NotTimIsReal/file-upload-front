@@ -15,3 +15,7 @@
   color: black;
   opacity: 1;
 }
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}

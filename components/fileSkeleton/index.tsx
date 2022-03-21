@@ -21,7 +21,7 @@ export default function FileSkeleton({
       .forEach((f) => {
         getContent(API, user, f, setMarkdown, markdown);
       });
-  }, [API, markdown, user]);
+  }, [user]);
   user.files = user.files.map((f: string) => {
     const file = f.split("/");
     return file.pop();

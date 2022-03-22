@@ -2,7 +2,24 @@ import Head from "next/head";
 export default function BaseHead() {
   return (
     <Head>
-      <link rel="stylesheet" href="" />
+      <title>File Upload</title>
+      <meta
+        name="description"
+        content="Open Source File-Upload No Limits Completely Free"
+      />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+      ></meta>
+      <meta property="og:title" content="File Upload" />
+      <meta
+        property="og:description"
+        content="Open Source File-Upload No Limits Completely Free"
+      />
+      <meta
+        property="og:image"
+        content="https://lifedesignfileupload.tk/favicon.ico"
+      />
     </Head>
   );
 }

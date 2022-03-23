@@ -6,6 +6,7 @@ import FileSkeleton, { FileEvents } from "../components/fileSkeleton";
 import Editable from "../components/editable";
 import Footer from "../components/footer";
 import LoadingBar from "react-top-loading-bar";
+import Head from "../components/head";
 export default function Dashboard({ API }: { API: string }) {
   const [User, setuser] = useState<User>();
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function Dashboard({ API }: { API: string }) {
   });
   return (
     <div className={css.container}>
+      <Head />
       <Editable API={API} />
 
       <Navbar loggedin={true} API={API}></Navbar>

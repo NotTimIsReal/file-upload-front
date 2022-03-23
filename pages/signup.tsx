@@ -2,6 +2,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import css from "../styles/signup.module.scss";
 import { Input, Button } from "@chakra-ui/react";
+import Head from "../components/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 export default function SignUp({ API }: { API: string }) {
@@ -21,6 +22,7 @@ export default function SignUp({ API }: { API: string }) {
   return (
     <div>
       <Navbar API={API} />
+      <Head></Head>
       <div className={css.container}>
         <div className={css.main}>
           <h1 className={css.title}>Signup Page</h1>

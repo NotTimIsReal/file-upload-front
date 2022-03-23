@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { useState, useEffect } from "react";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
+import Head from "../components/head";
 import css from "../styles/home.module.scss";
 const Home: NextPage<any> = ({ API }: { API: string }) => {
   const [loggedin, setLoggedin] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const Home: NextPage<any> = ({ API }: { API: string }) => {
   }, []);
   return (
     <div className={css.main}>
+      <Head></Head>
       <Navbar loggedin={loggedin} API={API} />
       <div className={css.page}>
         <h1 className={css.text}>The Greatest Ever File Browser! (I think)</h1>

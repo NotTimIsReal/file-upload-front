@@ -3,6 +3,7 @@ import css from "../styles/profile.module.scss";
 import { Button } from "@chakra-ui/react";
 import Footer from "../components/footer";
 import { useEffect, useState } from "react";
+import Head from "../components/head";
 export default function Profile({ API }: { API: string }) {
   const [User, setuser] = useState<User | null>(null);
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function Profile({ API }: { API: string }) {
   return (
     <div>
       <Navbar loggedin={true} API={API} />
+      <Head></Head>
       <div className={css.main}>
         <h1>Profile Of {User ? User?.username : "Loading"}</h1>
         <Button

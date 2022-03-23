@@ -3,10 +3,12 @@
 import Navbar from "../components/navbar";
 import css from "../styles/presentation.module.scss";
 import Footer from "../components/footer";
+import Head from "../components/head";
 export default function Presentation({ API }: { API: string }) {
   return (
     <div>
       <Navbar API={API} />
+      <Head></Head>
       <div className={css.main}>
         <div className={css.title}>
           <h1>Life Design Presentation</h1>

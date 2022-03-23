@@ -1,6 +1,7 @@
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import css from "../styles/login.module.scss";
+import Head from "../components/head";
 import { Input, Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -29,6 +30,7 @@ export default function Login({ API }: { API: string }) {
   return (
     <div>
       <Navbar API={API} loggedin={false} />
+      <Head></Head>
       <div className={css.container}>
         <div className={css.main}>
           <h1 className={css.title}>Login Page</h1>

@@ -33,7 +33,7 @@ const Navbar: FC<props> = ({ loggedin = false, API, User }) => {
       });
       if (res.status == 401 || res.status == 404) {
         setUser(null);
-      } else {
+      } else if (res.status == 200) {
         setUser(await res.json());
         loggedin = true;
       }

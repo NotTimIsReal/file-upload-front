@@ -31,9 +31,8 @@ const Navbar: FC<props> = ({ loggedin = false, API, User }) => {
         credentials: "include",
         method: "GET",
       });
-      if (res.status == 401) {
+      if (res.status == 401 || res.status == 404) {
         setUser(null);
-        loggedin = false;
       } else {
         setUser(await res.json());
         loggedin = true;

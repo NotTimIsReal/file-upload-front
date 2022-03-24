@@ -4,10 +4,23 @@ import Navbar from "../components/navbar";
 import css from "../styles/presentation.module.scss";
 import Footer from "../components/footer";
 import Head from "../components/head";
+import { useEffect, useState } from "react";
 export default function Presentation({ API }: { API: string }) {
+  const [user, setUser] = useState<User | boolean>();
+  async function getUser() {
+    const res = await fetch(`${API}/account/user/@me`, {
+      credentials: "include",
+      method: "GET",
+    });
+    setUser(res.status != 401);
+    return;
+  }
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <div>
-      <Navbar API={API} />
+      <Navbar API={API} loggedin={user} />
       <Head></Head>
       <div className={css.main}>
         <div className={css.title}>

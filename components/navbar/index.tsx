@@ -16,7 +16,7 @@ const signout = async (API: string) => {
 };
 
 interface props {
-  loggedin?: boolean;
+  loggedin?: boolean | User;
   API: string;
   User?: User;
 }

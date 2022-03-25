@@ -31,4 +31,9 @@ div.page {
       background-color: black;
     }
   }
+  div.flexDirectionColumn {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
 }

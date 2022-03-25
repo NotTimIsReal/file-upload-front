@@ -45,15 +45,17 @@ export default function Dashboard({ API }: { API: string }) {
       <LoadingBar progress={Progress} />
       <br />
       <div className={css.page}>
-        <p>Welcome Back, {User ? User?.username : "Loading"}</p>
-        <p>
-          Uploaded File Size,{" "}
-          {User ? niceBytes(User?.UploadedFileSize.toString()) : "Not Loaded"}
-        </p>
-        <p>
-          Last Uploaded,{" "}
-          {User ? new Date(User.createdAt).toUTCString() : "Not Loaded"}
-        </p>
+        <div className={css.flexDirectionColumn}>
+          <p>Welcome Back, {User ? User?.username : "Loading"}</p>
+          <p>
+            Uploaded File Size,{" "}
+            {User ? niceBytes(User?.UploadedFileSize.toString()) : "Not Loaded"}
+          </p>
+          <p>
+            Last Uploaded,{" "}
+            {User ? new Date(User.createdAt).toUTCString() : "Not Loaded"}
+          </p>
+        </div>
         <div className={css.upload}>
           <input
             type="file"

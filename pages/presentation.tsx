@@ -20,7 +20,7 @@ export default function Presentation({ API }: { API: string }) {
   }, []);
   return (
     <div>
-      <Navbar API={API} loggedin={user} />
+      <Navbar API={API} loggedin={user ? true : false} />
       <Head></Head>
       <div className={css.main}>
         <div className={css.title}>

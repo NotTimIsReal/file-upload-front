@@ -47,14 +47,14 @@ export default function Dashboard({ API }: { API: string }) {
       <div className={css.page}>
         <div className={css.flexDirectionColumn}>
           <p>Welcome Back, {User ? User?.username : "Loading"}</p>
-          <p>
+          {/* <p>
             Uploaded File Size,{" "}
             {User ? niceBytes(User?.UploadedFileSize.toString()) : "Not Loaded"}
           </p>
           <p>
             Last Uploaded,{" "}
             {User ? new Date(User.createdAt).toUTCString() : "Not Loaded"}
-          </p>
+          </p> */}
         </div>
         <div className={css.upload}>
           <input

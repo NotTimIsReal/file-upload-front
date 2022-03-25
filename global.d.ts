@@ -2,7 +2,7 @@ type User = {
   userid: string;
   username: string;
   createdAt: number;
-  UploadedFileSize: string;
+  UploadedFileSize: number;
   avatar: string;
   files: any[];
 };

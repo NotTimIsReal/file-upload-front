@@ -46,6 +46,14 @@ export default function Dashboard({ API }: { API: string }) {
       <br />
       <div className={css.page}>
         <p>Welcome Back, {User ? User?.username : "Loading"}</p>
+        <p>
+          Uploaded File Size,{" "}
+          {User ? niceBytes(User?.UploadedFileSize.toString()) : "Not Loaded"}
+        </p>
+        <p>
+          Last Uploaded,{" "}
+          {User ? new Date(User.createdAt).toUTCString() : "Not Loaded"}
+        </p>
         <div className={css.upload}>
           <input
             type="file"
@@ -103,4 +111,13 @@ async function revalidate(API: string, User: User) {
   });
 
   return await res.json();
+}
+function niceBytes(x: string) {
+  const units = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  let l = 0,
+    n = parseInt(x, 10) || 0;
+  while (n >= 1024 && ++l) {
+    n = n / 1024;
+  }
+  return n.toFixed(n < 10 && l > 0 ? 1 : 0) + " " + units[l];
 }

@@ -4,6 +4,7 @@ export default function BaseHead() {
     <Head>
       <title>File Upload</title>
       <link rel="manifest" href="/manifest.json" />
+      <meta name="theme-color" content="#F60D46" />
       <meta
         name="description"
         content="Open Source File-Upload No Limits Completely Free"

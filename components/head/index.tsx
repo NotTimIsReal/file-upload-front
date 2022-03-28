@@ -3,6 +3,7 @@ export default function BaseHead() {
   return (
     <Head>
       <title>File Upload</title>
+      <link rel="manifest" href="/manifest.json" />
       <meta
         name="description"
         content="Open Source File-Upload No Limits Completely Free"

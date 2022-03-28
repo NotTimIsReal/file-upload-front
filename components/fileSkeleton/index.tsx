@@ -59,7 +59,7 @@ export default function FileSkeleton({
                   compressed file
                 </p>
               ) : extention == "md" ? (
-                <div className={css.markdownContainer}>
+                <div className={css.markdownContainer} key={file}>
                   <ReactMarkdown>
                     {markdown.find((f) => f.file == file)
                       ? markdown.find((f) => f.file == file).text

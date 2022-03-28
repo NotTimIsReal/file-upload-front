@@ -67,6 +67,22 @@ export default function Presentation({ API }: { API: string }) {
         <br />
         <br />
         <p>Currently You Are On The Latest Build of This Site!</p>
+        <h1>How I Got This Idea</h1>
+        <p className={css.content}>
+          I got the idea of this file uploader from a couple of things, mainly
+          the fact that I wanted to imporve on an exsisting version of this that
+          I made a couple of months ago. The way I made it &quot;worked&quot;
+          but just barely.
+        </p>
+        <h1>Written Progress:</h1>
+        <p className={css.content}>
+          From Week 1 once I got my idea, I decided to use my existing template
+          which in all honesty was terrible at very least. So to deal with that,
+          I completely redesigned my website but kept the API because it was
+          pretty good but I did add more security fixes. The website at first
+          was literally an upload button, so I literally speedrunned the coding
+          sand finished it in under 2 weeks.
+        </p>
       </div>
       <Footer></Footer>
     </div>

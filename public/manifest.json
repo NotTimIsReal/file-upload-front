@@ -1,0 +1,9 @@
+{
+  "name": "File Upload",
+  "short_name": "File Upload",
+  "start_url": "home",
+  "icons": [],
+  "theme_color": "#F60D46",
+  "display": "fullscreen",
+  "orientation": "landscape"
+}

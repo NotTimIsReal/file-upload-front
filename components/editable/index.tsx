@@ -36,6 +36,7 @@ export default function Editable({ API }: { API: string }) {
         onClick={async () => {
           await SubmitData(file, API, user, content);
           setEditing(false);
+          FileEvents.emit("edit-save", file);
         }}
       >
         Save

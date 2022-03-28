@@ -28,6 +28,17 @@ div.main {
     margin-top: 40px;
     margin-bottom: 40px;
     min-width: 100px;
+    &.content {
+      max-width: calc(100vw * 0.75);
+      text-align: center;
+      justify-self: center;
+      align-self: center;
+    }
+  }
+  h1 {
+    margin: 10px;
+    font-size: 30px;
+    text-align: center;
   }
   img {
     height: 200px;

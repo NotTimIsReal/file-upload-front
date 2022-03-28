@@ -81,8 +81,15 @@ export default function Presentation({ API }: { API: string }) {
           I completely redesigned my website but kept the API because it was
           pretty good but I did add more security fixes. The website at first
           was literally an upload button, so I literally speedrunned the coding
-          sand finished it in under 2 weeks.
+          sand finished it in under 2 weeks. When I heard we needed a
+          presentatation I didn&apos;t want to be default and do a google slides
+          so I integrated the presentation into my website. I added the videos
+          and images through a slightly hacky method but hey! It works!
         </p>
+        <h1>Source Code</h1>
+        <a href="https://github.com/NotTimIsReal/file-upload-front">Website</a>
+        <a href="https://github.com/NotTimIsReal/file-upload-back">API</a>
+        <a href="https://github.com/NotTimIsReal">User</a>
       </div>
       <Footer></Footer>
     </div>

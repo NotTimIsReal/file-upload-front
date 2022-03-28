@@ -24,7 +24,18 @@ export default function SignUp({ API }: { API: string }) {
       <Navbar API={API} />
       <Head></Head>
       <div className={css.container}>
-        <div className={css.main}>
+        <div
+          className={css.main}
+          onKeyDown={(key) => {
+            if (key.key === "Enter") {
+              if (error !== null) return;
+              handleSignup(username, password, email, API).then((res) => {
+                if (res == null) return push("/login");
+                setError(res);
+              });
+            }
+          }}
+        >
           <h1 className={css.title}>Signup Page</h1>
           <Input
             type="text"

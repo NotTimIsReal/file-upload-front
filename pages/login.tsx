@@ -31,7 +31,18 @@ export default function Login({ API }: { API: string }) {
     <div>
       <Navbar API={API} loggedin={false} />
       <Head></Head>
-      <div className={css.container}>
+      <div
+        className={css.container}
+        onKeyDown={(key) => {
+          if (key.key === "Enter") {
+            if (error !== null) return;
+            handleLogin(username, password, API).then((res) => {
+              if (res == null) return push("/dashboard");
+              setError(res);
+            });
+          }
+        }}
+      >
         <div className={css.main}>
           <h1 className={css.title}>Login Page</h1>
           <Input
@@ -40,7 +51,10 @@ export default function Login({ API }: { API: string }) {
             color={"black"}
             className={css.input}
             value={username}
-            onChange={({ target }) => setUsername(target.value)}
+            onChange={({ target }) => {
+              if (error === "No User Found") setError(null);
+              setUsername(target.value);
+            }}
           />
           <Input
             type="password"
@@ -48,7 +62,10 @@ export default function Login({ API }: { API: string }) {
             color={"black"}
             className={css.input}
             value={password}
-            onChange={({ target }) => setPassword(target.value)}
+            onChange={({ target }) => {
+              if (error === "Incorrect Password") setError(null);
+              setPassword(target.value);
+            }}
           />
           <Button
             disabled={error != null || !User}

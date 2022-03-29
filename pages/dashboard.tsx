@@ -47,6 +47,11 @@ export default function Dashboard({ API }: { API: string }) {
       <div className={css.page}>
         <div className={css.flexDirectionColumn}>
           <p>Welcome Back, {User ? User?.username : "Loading"}</p>
+          <p>
+            Uploaded File Size:{" "}
+            {User ? niceBytes(User?.UploadedFileSize) : "Loading"}
+          </p>
+          <br />
           {/* <p>
             Uploaded File Size,{" "}
             {User ? niceBytes(User?.UploadedFileSize.toString()) : "Not Loaded"}
@@ -56,6 +61,7 @@ export default function Dashboard({ API }: { API: string }) {
             {User ? new Date(User.createdAt).toUTCString() : "Not Loaded"}
           </p> */}
         </div>
+        <br />
         <div className={css.upload}>
           <input
             type="file"
@@ -72,7 +78,7 @@ export default function Dashboard({ API }: { API: string }) {
             }}
           />
         </div>
-
+        <br />
         <div className={css.files}>
           {User ? (
             User?.files.length == 0 ? (

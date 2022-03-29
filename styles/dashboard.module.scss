@@ -12,18 +12,22 @@ div.page {
   height: 1000px;
   p {
     margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 1.5rem;
     font-family: "Ubuntu Mono", monospace;
     height: max-content;
+    margin: 15px;
   }
   div.files {
+    padding-top: 20px;
     margin: 90px;
     position: absolute;
     display: flex;
     flex-direction: row;
   }
   div.upload {
-    margin: 50px;
+    margin-right: 10px;
+    margin-top: 50px;
     right: 0;
     position: absolute;
     input.file {
